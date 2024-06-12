@@ -14,7 +14,7 @@ import (
 	"net/http"
 	"time"
 
-	"entrlcom.dev/go-http-request-body-json-decoder"
+	"entrlcom.dev/http-request-body-json-decoder"
 )
 
 const maxBytes = 1 << (10 * 1) * 2 // 2 KiB.
