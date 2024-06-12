@@ -1,4 +1,4 @@
-package go_http_request_body_json_decoder
+package http_request_body_json_decoder
 
 import (
 	"encoding/json"

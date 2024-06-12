@@ -30,7 +30,7 @@ func Handle(w http.ResponseWriter, r *http.Request) {
 	var request Request
 
 	// Decode HTTP request body to struct.
-	if err := go_http_request_body_json_decoder.Decode(w, r, &request, maxBytes); err != nil {
+	if err := http_request_body_json_decoder.Decode(w, r, &request, maxBytes); err != nil {
 		// TODO: Handle error.
 		return
 	}
