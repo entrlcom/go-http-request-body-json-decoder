@@ -1,0 +1,12 @@
+*
+
+!*.go
+!/.gitignore
+!/.golangci.yml
+!/go.mod
+!/go.sum
+!/LICENSE
+!/Makefile
+!/README.md
+
+!*/

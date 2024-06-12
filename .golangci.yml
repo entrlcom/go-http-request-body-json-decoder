@@ -1,0 +1,363 @@
+issues:
+  exclude-use-default: false
+  fix: true
+  max-issues-per-linter: 0
+  max-same-issues: 0
+
+linters-settings:
+  depguard:
+    rules:
+      internal:
+        allow:
+          # GOROOT.
+          - encoding/json
+          - errors
+          - io
+          - net/http
+          - strings
+      main:
+        deny:
+          # Error.
+          - pkg: github.com/pkg/errors
+            desc: Instead, use "errors"
+
+          # Logging.
+          - pkg: github.com/sirupsen/logrus
+            desc: Instead, use "github.com/rs/zerolog"
+          - pkg: go.uber.org/zap
+            desc: Instead, use "github.com/rs/zerolog"
+          - pkg: log
+            desc: Instead, use "github.com/rs/zerolog"
+
+          # Protocol Buffers.
+          - pkg: github.com/golang/protobuf
+            desc: Instead, use "google.golang.org/protobuf"
+
+          # UUID.
+          - pkg: github.com/gofrs/uuid
+            desc: Instead, use "github.com/google/uuid"
+          - pkg: github.com/satori/go.uuid
+            desc: Instead, use "github.com/google/uuid"
+
+  dupl:
+    threshold: 100
+
+  errcheck:
+    check-blank: true
+    check-type-assertions: true
+    disable-default-exclusions: true
+    exclude-functions:
+      - encoding/json.Marshal
+      - encoding/json.MarshalIndent
+
+  errchkjson:
+    check-error-free-encoding: true
+
+  exhaustive:
+    check:
+      - map
+      - switch
+    check-generated: true
+
+  exhaustruct:
+    exclude:
+      # GOROOT.
+      - 'crypto/tls\.Config'
+      - 'net/http\.Server'
+
+      # Third-party.
+      - 'github\.com/rs/zerolog\.ConsoleWriter'
+
+  forbidigo:
+    analyze-types: true
+    forbid:
+      - ^((==|!=) "")$
+      - ^(fmt\\.Print(|f|ln)|goto|print(|ln))$
+      - ^(http\\.Default(Client|Transport))$
+      - ^(time\\.Sleep)$
+
+  funlen:
+    ignore-comments: true
+    lines: 60
+    statements: 40
+
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(entrlcom.dev/)
+      - blank
+      - dot
+
+  gocognit:
+    min-complexity: 10
+
+  goconst:
+    ignore-calls: true
+    max: 0
+    min: 0
+    min-len: 2
+    min-occurrences: 2
+
+  gocritic:
+    disabled-checks:
+      - emptyStringTest
+      - ruleguard
+      - sloppyReassign
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      # - security
+      - style
+    settings:
+      captLocal:
+        paramsOnly: true
+      commentedOutCode:
+        minLength: 15
+      elseif:
+        skipBalanced: true
+      hugeParam:
+        sizeThreshold: 256
+      ifElseChain:
+        minThreshold: 2
+      nestingReduce:
+        bodyWidth: 2
+      rangeExprCopy:
+        sizeThreshold: 512
+        skipTestFuncs: false
+      rangeValCopy:
+        sizeThreshold: 128
+        skipTestFuncs: false
+      tooManyResultsChecker:
+        maxResults: 2
+      truncateCmp:
+        skipArchDependent: false
+      underef:
+        skipRecvDeref: false
+      unnamedResult:
+        checkExported: true
+
+  godot:
+    capital: false
+    period: true
+    scope: all
+
+  godox:
+    keywords:
+      - BUG
+      - FIXME
+      - HACK
+      - OPTIMIZE
+      - TODO
+
+  gofumpt:
+    extra-rules: true
+    module-path: entrlcom.dev/http-server
+
+  gosimple:
+    checks:
+      - all
+
+  grouper:
+    import-require-grouping: true
+
+  govet:
+    enable-all: true
+
+  misspell:
+    locale: US
+
+  musttag:
+    functions: [ ]
+
+  nakedret:
+    max-func-lines: 0
+
+  nestif:
+    min-complexity: 3
+
+  nilnil:
+    checked-types:
+      - chan
+      - func
+      - iface
+      - map
+      - ptr
+
+  nolintlint:
+    require-explanation: true
+    require-specific: true
+
+  prealloc:
+    for-loops: true
+
+  rowserrcheck:
+    packages:
+      - github.com/jmoiron/sqlx
+
+  staticcheck:
+    checks:
+      - all
+
+  stylecheck:
+    checks:
+      - all
+      - -ST1000
+      - -ST1003
+
+  tagalign:
+    strict: true
+
+  tagliatelle:
+    case:
+      rules:
+        bson: snake
+        env: upperSnake
+        json: snake
+
+  usestdlibvars:
+    constant-kind: true
+    crypto-hash: true
+    default-rpc-path: true
+    sql-isolation-level: true
+    time-layout: true
+    time-month: true
+    tls-signature-scheme: true
+
+  wsl:
+    allow-assign-and-anything: false
+    allow-assign-and-call: true
+    allow-cuddle-declarations: false
+    allow-cuddle-with-calls:
+      - Lock
+      - RLock
+    allow-cuddle-with-rhs:
+      - RUnlock
+      - Unlock
+    allow-multiline-assign: true
+    allow-separated-leading-comment: false
+    allow-trailing-comment: false
+    error-variable-names:
+      - err
+    force-case-trailing-whitespace: 0
+    force-err-cuddling: false
+    force-short-decl-cuddling: false
+    strict-append: true
+
+linters:
+  disable:
+    - dupword
+    - ginkgolinter
+    - gocyclo
+    - gofmt
+    - goheader
+    - goimports # gci
+    - gomodguard
+    - gosmopolitan
+    - ireturn
+    - loggercheck
+    - maintidx
+    - nonamedreturns
+    - reassign
+    - revive # TODO: Set linter.
+    - varnamelen
+    - wrapcheck
+  enable:
+    - asasalint
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - containedctx
+    - contextcheck
+    - cyclop
+    - decorder
+    - depguard
+    - dogsled
+    - dupl
+    - durationcheck
+    - errcheck
+    - errchkjson
+    - errname
+    - errorlint
+    - execinquery
+    - exhaustive
+    - exhaustruct
+    - exportloopref
+    - forcetypeassert
+    - funlen
+    - gci
+    - gocheckcompilerdirectives
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - godot
+    - godox
+    - goerr113
+    - gofumpt
+    - gomnd
+    - gomoddirectives
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - grouper
+    - govet
+    - importas
+    - ineffassign
+    - interfacebloat
+    - lll
+    - makezero
+    - mirror
+    - misspell
+    - musttag
+    - nakedret
+    - nestif
+    - nilerr
+    - nilnil
+    - nlreturn
+    - noctx
+    - nolintlint
+    - nosprintfhostport
+    - paralleltest
+    - prealloc
+    - predeclared
+    - promlinter
+    - rowserrcheck
+    - sqlclosecheck
+    - staticcheck
+    - stylecheck
+    - tagalign
+    - tagliatelle
+    - tenv
+    - testableexamples
+    - testpackage
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    - usestdlibvars
+    - wastedassign
+    - whitespace
+    - wsl
+  presets:
+    - bugs
+    - comment
+    - complexity
+    - error
+    - format
+    - import
+    - metalinter
+    - module
+    - performance
+    - sql
+    - style
+    - test
+    - unused
+
+output:
+  sort-results: true
+
+run:
+  modules-download-mode: readonly
